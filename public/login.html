@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="dashboard-container">
+<h2>Employee Login</h2>
+
+<form id="loginForm">
+
+<label>Email:</label><br>
+<input type="email" id="email" required><br><br>
+
+<label>Password:</label><br>
+<div class="password-box">
+    <input type="password" id="password" placeholder="Password">
+
+    <span class="toggle-password"
+    onclick="togglePassword()">
+        👁
+    </span>
+</div>
+<p style="text-align:right; margin-top:8px;">
+<a href="/forgot-password.html"
+style="color: #38bdf8;
+text-decoration: none;
+font-size: 14px;">Forgot Password?
+</a>
+</p>
+<button type="submit">Login</button>
+
+</form>
+</div>  
+
+<script>
+let startTime = 0;
+let keyDownTimes = {};
+let dwellTimes = [];
+let flightTimes = [];
+let lastKeyUpTime = 0;
+let totalKeys = 0;
+let correctKeys = 0;
+ 
+// Track keydown
+const passwordField = document.getElementById("password");
+passwordField.addEventListener("keydown", (e) => {
+    keyDownTimes[e.key] = Date.now();
+
+    if (lastKeyUpTime !== 0) {
+        let flight = Date.now() - lastKeyUpTime;
+        flightTimes.push(flight);
+    }
+});
+
+// Track keyup
+passwordField.addEventListener("keyup", (e) => {
+    if(keyDownTimes[e.key]){
+        let dwell= Date.now()- keyDownTimes[e.key];
+        dwellTimes.push(dwell);
+        delete keyDownTimes[e.key];
+    }
+
+    lastKeyUpTime = Date.now();
+    totalKeys++;
+});
+
+// Login form
+const form = document.getElementById("loginForm");
+
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Calculate metrics
+    const avgDwell = dwellTimes.reduce((a,b)=>a+b,0) / dwellTimes.length || 0;
+    const avgFlight = flightTimes.reduce((a,b)=>a+b,0) / flightTimes.length || 0;
+    const typingSpeed = avgDwell; // simple metric
+    const typingAccuracy= totalKeys > 0 ?(dwellTimes.length/totalKeys) * 100 : 0;
+    const typingPattern = JSON.stringify({ dwellTimes, flightTimes });
+    const patternData={ dwellTimes: dwellTimes,
+        flightTimes: flightTimes
+    };
+
+    try {
+    const response = await fetch("/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            typingSpeed,
+            typingAccuracy,
+            typingPattern: JSON.stringify(patternData)
+        })
+    });
+
+    // 👇 Read raw response first
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
+
+    let data;
+
+    try {
+        data = JSON.parse(text);
+    } catch (err) {
+        alert("Server returned invalid response");
+        return;
+    }
+
+    // ✅ Handle responses properly
+    if (data.requireOTP) {
+        localStorage.setItem("otpEmail", data.email);
+        window.location.href = "/otp.html";
+    }
+    else if (data.message === "Login successful") {
+        localStorage.setItem("employeeId", data.userId);
+
+        localStorage.setItem("role", data.role);
+        window.location.href = "/dashboard.html";
+    }
+    else {
+        alert(data.message);
+    }
+
+} catch (error) {
+    console.log(error);
+    alert("Fetch error");
+}
+});
+function togglePassword(){
+    const passwordInput= document.getElementById("password");
+    if(passwordInput.type === "password"){
+        passwordInput.type="text";
+    }
+    else{
+        passwordInput.type="password";
+    }
+
+}
+</script>
+
+</body>
+</html>

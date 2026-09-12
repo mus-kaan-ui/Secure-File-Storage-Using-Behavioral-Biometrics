@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Employee Storage</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background:#f8fafc;
+            color:#1e293b;
+        }
+
+        /* ===== NAVBAR ===== */
+
+        .navbar{
+            width:100%;
+            background:#0f172a;
+            color:white;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 60px;
+
+            position:sticky;
+            top:0;
+
+            z-index:1000;
+        }
+
+        .logo{
+            font-size:24px;
+            font-weight:700;
+        }
+
+        .nav-links{
+            display:flex;
+            gap:20px;
+        }
+
+        .nav-links a{
+            color:white;
+            text-decoration:none;
+            font-weight:500;
+            transition:0.3s;
+        }
+
+        .nav-links a:hover{
+            color:#60a5fa;
+        }
+
+        /* ===== HERO ===== */
+
+        .hero{
+            min-height:90vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            padding:60px;
+
+            background:
+            linear-gradient(
+                rgba(15,23,42,0.88),
+                rgba(15,23,42,0.88)
+            ),
+            url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400");
+
+            background-size:cover;
+            background-position:center;
+
+            color:white;
+            text-align:center;
+        }
+
+        .hero-content{
+            max-width:850px;
+        }
+
+        .hero h1{
+            font-size:56px;
+            line-height:1.2;
+            margin-bottom:25px;
+        }
+
+        .hero p{
+            font-size:20px;
+            color:#cbd5e1;
+            margin-bottom:35px;
+            line-height:1.7;
+        }
+
+        .hero-buttons{
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            flex-wrap:wrap;
+        }
+
+        .btn{
+            padding:14px 30px;
+            border:none;
+            border-radius:12px;
+
+            font-size:16px;
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.3s;
+            text-decoration:none;
+        }
+
+        .btn-primary{
+            background:#2563eb;
+            color:white;
+        }
+
+        .btn-primary:hover{
+            background:#1d4ed8;
+            transform:translateY(-3px);
+        }
+
+        .btn-secondary{
+            background:white;
+            color:#0f172a;
+        }
+
+        .btn-secondary:hover{
+            transform:translateY(-3px);
+        }
+
+        /* ===== FEATURES ===== */
+
+        .features{
+            max-width:1200px;
+            margin:80px auto;
+            padding:20px;
+        }
+
+        .section-title{
+            text-align:center;
+            margin-bottom:50px;
+        }
+
+        .section-title h2{
+            font-size:38px;
+            margin-bottom:15px;
+        }
+
+        .section-title p{
+            color:#64748b;
+            font-size:17px;
+        }
+
+        .feature-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:30px;
+        }
+
+        .feature-card{
+            background:white;
+
+            padding:35px;
+
+            border-radius:20px;
+
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+            transition:0.3s;
+        }
+
+        .feature-card:hover{
+            transform:translateY(-6px);
+        }
+
+        .feature-icon{
+            font-size:45px;
+            margin-bottom:20px;
+        }
+
+        .feature-card h3{
+            margin-bottom:15px;
+            font-size:24px;
+        }
+
+        .feature-card p{
+            color:#64748b;
+            line-height:1.7;
+        }
+
+        /* ===== ABOUT ===== */
+
+        .about{
+            background:#e2e8f0;
+            padding:80px 20px;
+        }
+
+        .about-container{
+            max-width:1000px;
+            margin:auto;
+            text-align:center;
+        }
+
+        .about h2{
+            font-size:38px;
+            margin-bottom:25px;
+        }
+
+        .about p{
+            font-size:18px;
+            line-height:1.8;
+            color:#334155;
+        }
+
+        /* ===== TECHNOLOGIES ===== */
+
+        .tech{
+            max-width:1200px;
+            margin:80px auto;
+            padding:20px;
+            text-align:center;
+        }
+
+        .tech-list{
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            flex-wrap:wrap;
+            margin-top:30px;
+        }
+
+        .tech-item{
+            background:#0f172a;
+            color:white;
+
+            padding:15px 25px;
+
+            border-radius:12px;
+
+            font-weight:500;
+        }
+
+        /* ===== FOOTER ===== */
+
+        footer{
+            background:#0f172a;
+            color:white;
+
+            text-align:center;
+
+            padding:30px 20px;
+
+            margin-top:60px;
+        }
+
+        footer p{
+            color:#cbd5e1;
+        }
+
+        /* ===== RESPONSIVE ===== */
+
+        @media(max-width:768px){
+
+            .navbar{
+                flex-direction:column;
+                gap:15px;
+                padding:20px;
+            }
+
+            .hero h1{
+                font-size:38px;
+            }
+
+            .hero p{
+                font-size:17px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Secure Employee Storage
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#features">Features</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Intelligent Secure File Management System
+            </h1>
+
+            <p>
+                A modern employee storage platform with
+                typing biometrics, OTP authentication,
+                suspicious login detection, file sharing,
+                and admin monitoring.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="login.html" class="btn btn-primary">
+                    Login
+                </a>
+
+                <a href="register.html" class="btn btn-secondary">
+                    Register
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+
+    <section class="features" id="features">
+
+        <div class="section-title">
+            <h2>Key Features</h2>
+
+            <p>
+                Security-focused intelligent employee storage platform
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🔐</div>
+
+                <h3>Secure Authentication</h3>
+
+                <p>
+                    Password hashing, OTP verification,
+                    and account lock protection.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🧠</div>
+
+                <h3>Typing Biometrics</h3>
+
+                <p>
+                    Detects suspicious logins using
+                    typing speed and accuracy analysis.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📁</div>
+
+                <h3>File Sharing</h3>
+
+                <p>
+                    Securely upload and share files
+                    with authorized employees.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📊</div>
+
+                <h3>Admin Analytics</h3>
+
+                <p>
+                    Monitor users, suspicious logins,
+                    uploads, and reports using charts.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT -->
+
+    <section class="about">
+
+        <div class="about-container">
+
+            <h2>
+                Why This System?
+            </h2>
+
+            <p>
+                Traditional authentication systems rely only on passwords,
+                making them vulnerable to unauthorized access.
+                This project introduces behavioral authentication using
+                typing biometrics combined with OTP verification
+                for enhanced employee security and monitoring.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- TECHNOLOGIES -->
+
+    <section class="tech">
+
+        <div class="section-title">
+
+            <h2>Technologies Used</h2>
+
+            <p>
+                Full-stack technologies powering the system
+            </p>
+
+        </div>
+
+        <div class="tech-list">
+
+            <div class="tech-item">HTML</div>
+            <div class="tech-item">CSS</div>
+            <div class="tech-item">JavaScript</div>
+            <div class="tech-item">Node.js</div>
+            <div class="tech-item">Express.js</div>
+            <div class="tech-item">MySQL</div>
+            <div class="tech-item">Chart.js</div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h3>Secure Employee Storage System</h3>
+
+        <p>
+            Developed for secure employee authentication
+            and file management
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

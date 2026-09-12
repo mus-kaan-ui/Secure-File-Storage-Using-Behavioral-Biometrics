@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    <title>Admin Dashboard</title>
+
+    <script>
+        const role = localStorage.getItem("role");
+
+        if (role !== "admin") {
+            alert("Access denied!");
+            window.location.href = "/dashboard.html";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Small Admin Specific CSS -->
+    <style>
+
+        .header{
+            width:100%;
+            background:#0f172a;
+            color:white;
+
+            padding:20px;
+
+            text-align:center;
+
+            font-size:28px;
+            font-weight:600;
+
+            box-shadow:0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .section{
+            background:white;
+
+            padding:25px;
+
+            border-radius:18px;
+
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .chart-section{
+            background:white;
+
+            margin-top:30px;
+
+            padding:25px;
+
+            border-radius:18px;
+
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        #SuspiciousTable tr{
+            background:#fff5f5;
+        }
+
+        #SuspiciousTable td:nth-child(4){
+            color:red;
+            font-weight:bold;
+        }
+
+        #suspiciousCount{
+            margin-top:15px;
+            margin-bottom:10px;
+            color:#dc2626;
+        }
+
+        @media(max-width:900px){
+
+            .grid{
+                grid-template-columns:1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+<!----<head>
+    <title>Admin Dashboard</title>
+
+    <script>
+        const role = localStorage.getItem("role");
+
+        if (role !== "admin"){
+            alert("Access denied!");
+        
+        window.location.href = "/dashboard.html";
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .grid {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section { 
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+        }
+
+        button {
+            padding: 6px 10px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .chart-section {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #SuspiciousTable tr{
+            background: #fff5f5;
+        }
+        #SuspiciousTable tr 
+        td:nth-child(4){
+        color: red;
+        font-weight: bold;
+        }
+    </style>
+</head>-->
+
+<body>
+<div class="navbar">
+    <div>
+        Secure Employee Storage
+    </div>
+    <button onclick="logout()" class="logout-btn"> Logout</button>
+</div>
+
+<div class="dashboard-container">
+
+    <div class="grid">
+
+        <!-- USERS -->
+        <div class="section">
+            <h3>All Employees</h3>
+            <button onclick="loadUsers()">Load Users</button>
+
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- FILES -->
+        <div class="section">
+            <h3>All Files</h3>
+            <button onclick="loadFiles()">Load Files</button>
+
+            <table id="filesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Filename</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-section">
+        <h3>Files by Department</h3>
+        <canvas id="adminChart"></canvas>
+    </div>
+
+</div>
+<div class="section">
+    <h3>Suspicious Logins</h3>
+    <button onclick="loadSuspicious()">Load Suspicious</button>
+    <h4 id="suspiciousCount"></h4>
+    <table border="1" width="100%" id="SuspiciousTable">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Speed</th>
+                <th>Accuracy</th>
+                <th>Reason</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="section">
+
+    <h3>Analytics & Reports</h3>
+
+    <p>
+        View graphical analytics of users, files,
+        suspicious logins and department activity.
+    </p>
+
+    <button onclick="window.location.href='/report.html'">
+        View Analytics Report
+    </button>
+
+</div>
+<script>
+
+let chartInstance = null;
+
+// LOAD USERS
+async function loadUsers(){
+    try {
+        const res = await fetch("/admin/users", {
+            headers:{
+                role: localStorage.getItem("role")
+            }
+        });
+        const data = await res.json();
+
+        const table = document.querySelector("#usersTable tbody");
+        table.innerHTML = "";
+
+        data.forEach(u => {
+            const row = `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td>
+                        <button onclick="deleteUser(${u.id})">Delete</button>
+                    </td>
+                </tr>
+            `;
+            table.innerHTML += row;
+        });
+
+    } catch (err) {
+        console.log(err);
+        alert("Error loading users");
+    }
+}
+
+
+// LOAD FILES + CHART
+async function loadFiles(){
+    try {
+        const res = await fetch("/admin/files", {
+            headers:{
+                role: localStorage.getItem("role")
+            }
+        });
+        const data = await res.json();
+
+        const table = document.querySelector("#filesTable tbody");
+        table.innerHTML = "";
+
+        let deptCount = {};
+
+        data.forEach(f => {
+            const row = `
+                <tr>
+                    <td>${f.id}</td>
+                    <td>${f.filename}</td>
+                    <td>${f.department}</td>
+                    <td>
+                        <button onclick="deleteFile(${f.id})">Delete</button>
+                    </td>
+                </tr>
+            `;
+            table.innerHTML += row;
+
+            deptCount[f.department] = (deptCount[f.department] || 0) + 1;
+        });
+
+        renderChart(deptCount);
+
+    } catch (err) {
+        console.log(err);
+        alert("Error loading files");
+    }
+}
+
+
+// DELETE USER
+async function deleteUser(id){
+    if(!confirm("Delete this user?")) return;
+
+    await fetch(`/admin/users/${id}`, {
+        method: "DELETE"
+    });
+
+    loadUsers();
+}
+
+
+// DELETE FILE
+async function deleteFile(id){
+    if(!confirm("Delete this file?")) return;
+
+    await fetch(`/admin/files/${id}`, {
+        method: "DELETE"
+    });
+
+    loadFiles();
+}
+
+//SUSPICIOUS
+async function loadSuspicious() {
+
+    const res = await fetch("/admin/suspicious", {
+        headers:{
+            role: localStorage.getItem("role")
+        }
+    });
+    const data = await res.json();
+    
+    console.log(data);
+
+    const tbody = document.querySelector("#SuspiciousTable tbody");
+    tbody.innerHTML = "";
+    document.getElementById("suspiciousCount").innerText = "Total Suspicious Logins:"+data.length;
+    data.forEach(log => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+        <td> ${log.email}</td>
+        <td> ${log.typing_speed}</td>
+        <td> ${log.typing_accuracy}</td>
+        <td> ${log.reason}</td>
+        <td> ${new Date(log.created_at).toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+}
+// CHART
+function renderChart(deptData){
+    const ctx = document.getElementById("adminChart").getContext("2d");
+
+    if(chartInstance){
+        chartInstance.destroy();
+    }
+
+    chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: Object.keys(deptData),
+            datasets: [{
+                label: "Files",
+                data: Object.values(deptData)
+            }]
+        }
+    });
+}
+function logout(){
+
+    localStorage.clear();
+
+    alert("Logged out successfully");
+
+    window.location.href = "/login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,459 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:
+    linear-gradient(rgba(10,15,35,0.92),
+    rgba(10,15,35,0.92)),
+    url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+/* NAVBAR */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(8px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.navbar div:first-child{
+    font-size:30px;
+    font-weight:700;
+}
+
+/* LOGOUT BUTTON */
+
+.logout-btn{
+    width:auto;
+    padding:12px 18px;
+    background:#dc2626;
+    border:none;
+    border-radius:10px;
+    font-size:14px;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+}
+
+/* MAIN CONTAINER */
+
+.dashboard-container{
+    max-width:1100px;
+    margin:40 px auto;
+    padding:20px;
+}
+
+.dashboard-container h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:40px;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-bottom:40px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    color:white;
+    transition:0.3s;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+/* BUTTONS */
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg, #2563eb, #06b6d4);
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+    transition:0.3s;
+}
+
+/* FILE SECTIONS */
+
+.files-section{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    padding:25px;
+    border-radius:20px;
+    margin-top:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.files-section h3{
+    margin-bottom:20px;
+}
+
+.files-section{
+    color: white;
+}
+
+/* FILE LIST */
+
+ul{
+    list-style:none;
+    padding:0;
+}
+
+li{
+    background:rgba(255,255,255,0.06);
+    margin-bottom:12px;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+/* LINKS */
+
+a{
+    color:#60a5fa;
+    text-decoration:none;
+    font-weight:500;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+/* SHARE BOX */
+
+#shareBox{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+select{
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-right:10px;
+}
+
+/* CHART */
+
+canvas{
+    background:rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:15px;
+}
+    /*margin-top:20px;
+
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .navbar{
+        padding:18px 40px;
+    }
+
+    .navbar div:first-child{
+        font-size:22px;
+    }
+
+    .dashboard-container h2{
+        font-size:32px;
+    }
+
+    li{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+    .card h3,
+    .files-section h3,
+    .dashboard-container h2,
+    li, 
+    p,
+    label {
+        color: white;
+    }
+</style>
+</head>
+
+<body>
+
+<!--<div class="header">
+    Employee Dashboard
+</div>-->
+<div class="navbar">
+
+    <div>
+        Secure Employee Storage
+    </div>
+
+    <div style="display:flex; gap:15px; align-items:center;">
+
+        <button onclick="logout()" class="logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
+
+<div class="dashboard-container">
+
+    <h2>Welcome Employee</h2>
+
+    <!-- Cards Section -->
+    <div class="cards">
+        <div class="card">
+            <h3>Upload</h3>
+            <button onclick="goUpload()">Upload File</button>
+        </div>
+
+        <div class="card">
+            <h3>My Files</h3>
+            <button onclick="loadFiles()">View Files</button>
+        </div>
+
+        <div class="card admin-card" id="adminCard" style="display: none;">
+            <h3>Admin Panel</h3>
+            <button onclick="goAdmin()">Open Admin</button>
+        </div>
+    </div>
+
+    <!-- Files List -->
+    <div class="files-section">
+        <h3>Your Files</h3>
+        <ul id="files"></ul>
+    </div>
+    <div id="shareBox"
+    style="display: none;
+    margin-top: 10px;">
+    <select id="userSelect"></select>
+    <button onclick="confirmShare()">Share</button>
+    </div>
+    <h3>Shared With Me</h3>
+    <ul id="sharedFiles"></ul>
+    <button onclick="loadSharedFiles()">Load Shared Files</button>
+    <div class="files-section">
+        <h3>Files by Department</h3>
+        <canvas id="deptChart"></canvas>
+    </div>
+</div>
+
+<script>
+function goUpload(){
+    window.location.href = "/upload.html";
+}
+
+async function loadFiles(){
+    const employeeId = localStorage.getItem("employeeId");
+
+    const res = await fetch(`/files?employeeId=${employeeId}`);
+    const data = await res.json();
+
+    const list = document.getElementById("files");
+    list.innerHTML = "";
+
+    // 🔹 For chart
+    const deptCount = {};
+
+    data.forEach(f=>{
+        // list
+        const li = document.createElement("li");
+        li.innerHTML = `
+    <a href="/${f.filepath}" target="_blank">
+        ${f.filename}
+    </a> (${f.department})
+    <button onclick="shareFile(${f.id})">Share</button>
+    `;
+        list.appendChild(li);
+
+        // count departments
+        if(deptCount[f.department]){
+            deptCount[f.department]++;
+        } else {
+            deptCount[f.department] = 1;
+        }
+    });
+
+    renderChart(deptCount);
+}
+console.log("loadSharedFiles trigggered");
+async function loadSharedFiles() {
+
+    const employeeId = localStorage.getItem("employeeId");
+
+    const res = await fetch(`/shared-files?employeeId=${employeeId}`);
+    const data = await res.json();
+    
+    console.log("Shared files data:", data);
+    console.log("Employee ID:", employeeId);
+
+    const list = document.getElementById("sharedFiles");
+
+    if (!list) {
+        console.log("sharedFiles element not found");
+        return;
+    }
+
+    list.innerHTML = "";
+
+    data.forEach(f => {
+
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <a href="/${f.filepath}" target="_blank">
+                ${f.filename}
+            </a> (${f.department})
+        `;
+
+        list.appendChild(li);
+    });
+}
+
+function renderChart(deptData){
+
+    const labels = Object.keys(deptData);
+    const values = Object.values(deptData);
+
+    const ctx = document.getElementById("deptChart");
+
+    // destroy old chart if exists
+    if(window.myChart){
+        window.myChart.destroy();
+    }
+
+    window.myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Files per Department",
+                data: values
+            }]
+        }
+    });
+}
+function goUpload(){
+    window.location.href = "/upload.html";
+}
+function goAdmin(){
+    window.location.href = "/admin.html";
+}
+
+// ✅ ADD YOUR NEW CODE HERE
+let currentFileId = null;
+
+async function shareFile(fileId) {
+
+    currentFileId = fileId;
+
+    const res = await fetch("/users");
+    const users = await res.json();
+
+    const select = document.getElementById("userSelect");
+    select.innerHTML = "";
+
+    const currentUser = localStorage.getItem("employeeId");
+
+    users.forEach(u => {
+        if (u.id == currentUser) return;
+
+        const option = document.createElement("option");
+        option.value = u.id;
+        option.textContent = `${u.name} (${u.email})`;
+        select.appendChild(option);
+    });
+
+    document.getElementById("shareBox").style.display = "block";
+}
+
+async function confirmShare() {
+
+    const sharedWith = document.getElementById("userSelect").value;
+    const ownerId = localStorage.getItem("employeeId");
+
+    const res = await fetch("/share", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fileId: currentFileId,
+            sharedWith,
+            ownerId
+        })
+    });
+
+    const data = await res.text();
+    alert(data);
+
+    document.getElementById("shareBox").style.display = "none";
+}
+
+const role = localStorage.getItem("role");
+
+if (role === "admin"){
+    document.getElementById("adminCard").style.display = "block";
+}
+function logout(){
+
+    localStorage.clear();
+
+    alert("Logged out successfully");
+
+    window.location.href = "/login.html";
+}
+</script>
+</body>

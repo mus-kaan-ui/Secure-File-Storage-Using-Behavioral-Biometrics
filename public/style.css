@@ -1,0 +1,456 @@
+/* ===== GLOBAL ===== */
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg,#eef2ff,#f8fafc);
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar{
+    width: 100%;
+    background: #0f172a;
+    color: white;
+
+    padding: 18px 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 600;
+    font-size: 24px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+/* FOR LOGOUT button */
+.navbar{
+    width:100%;
+    background:#0f172a;
+    color:white;
+
+    padding:18px 30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    font-weight:600;
+    font-size:24px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ===== FORM CONTAINER ===== */
+
+.container{
+    width: 380px;
+    margin: 80px auto;
+    padding: 30px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+}
+
+.container:hover{
+    transform: translateY(-3px);
+}
+
+/* ===== HEADINGS ===== */
+
+h1,h2,h3{
+    color: #0f172a;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* ===== LABELS ===== */
+
+label{
+    font-size: 14px;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* ===== INPUTS ===== */
+
+input,
+select{
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 6px;
+    margin-bottom: 18px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+input:focus,
+select:focus{
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+/* ===== BUTTONS ===== */
+
+button{
+    width: 100%;
+
+    padding: 12px;
+
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+button:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.dashboard-btn{
+    margin-bottom: 12px;
+}
+
+/* ===== DASHBOARD ===== */
+
+.dashboard-container{
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* ===== DASHBOARD CARDS ===== */
+
+.cards{
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+
+    gap: 25px;
+
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.card{
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+
+.card h3{
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+/* ===== FILE SECTION ===== */
+
+.files-section{
+    background: white;
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.files-section h3{
+    margin-bottom: 20px;
+}
+
+/* ===== LIST ===== */
+
+ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+li{
+    background: #f8fafc;
+
+    padding: 14px;
+
+    margin-top: 10px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: 0.3s;
+}
+
+li:hover{
+    background: #e2e8f0;
+}
+
+/* ===== LINKS ===== */
+
+a{
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: 500;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+/* ===== TABLES ===== */
+
+table{
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+th{
+    background: #2563eb;
+    color: white;
+
+    padding: 14px;
+
+    text-align: left;
+
+    font-weight: 600;
+}
+
+td{
+    padding: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover{
+    background: #f8fafc;
+}
+
+/* ===== ADMIN GRID ===== */
+
+.admin-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* ===== CHART ===== */
+
+.chart-card{
+    background: white;
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+canvas{
+    width: 100% !important;
+    max-height: 400px;
+}
+
+/* ===== SHARE BOX ===== */
+
+#shareBox{
+    background: white;
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px){
+
+    .admin-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .cards{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 500px){
+
+    .container{
+        width: 92%;
+        margin: 40px auto;
+    }
+
+    .navbar{
+        font-size: 20px;
+        padding: 15px;
+    }
+
+}
+
+.password-box{
+    position: relative;
+    width:100%;
+}
+
+.password-box input{
+    width:100%;
+    padding-right:45px;
+}
+
+.toggle-password{
+    position: absolute;
+    right: 15px;
+    top:50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+    font-size: 18px;
+    
+}
+/*
+{
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 360px;
+    margin: 80px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+h2{
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+label{
+    font-size: 14px;
+    color: #555;
+}
+input, select{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+button{
+    width: 100%;
+    padding: 10px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+button:hover{
+    background: #34495e;
+}
+.dashboard-btn{
+    margin-bottom: 10px;
+}
+ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+li{
+    background: #ecf0f1;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+.navbar{
+    width: 100%;
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+@media (max-width: 400px){
+    .container{
+        width: 90%;
+        margin: 40px auto;
+    }
+}*/

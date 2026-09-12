@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="dashboard-container">
+<h2>Employee Registration</h2>
+
+<form id="registerForm">
+  
+  <label>Name:</label><br>
+  <input type="text" name="name" id="name" required><br><br>
+
+  <label>Email:</label><br>
+  <input type="email" name="email" id="email" required><br><br>
+
+  <label>Password:</label><br>
+  <input type="password" name="password" id="password" required><br><br>
+
+  <button type="submit">Register</button>
+
+</form>
+</div>
+<script>
+
+  const form=document.getElementById("registerForm");
+  form.addEventListener("submit", async function(e){
+  
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const response = await fetch("/auth/register",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({name,email,password})
+  });
+
+  const data = await response.json();
+
+  alert(data.message);
+
+  if(data.message=="User registered successfully"){
+  window.location.href="/login.html";
+}
+
+});
+
+
+</script>
+
+</body>
+</html>
