@@ -241,7 +241,7 @@ exports.loginUser = (req, res) => {
         };
 
         await transporter.sendMail({
-            from: "shaikmuskan288@gmail.com",
+            from: process.env.EMAIL_USER,
             to: email,
             subject: "Suspicious Login OTP",
             text: `Hello ${user.name},
@@ -397,7 +397,7 @@ exports.forgotPassword = (req, res) => {
             await transporter.sendMail({
 
                 from:
-                "shaikmuskan288@gmail.com",
+                process.env.EMAIL_USER,
 
                 to: email,
 
